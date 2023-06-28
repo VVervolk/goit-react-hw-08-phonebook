@@ -2,7 +2,7 @@
 import { Section } from './App.styled';
 import Contactsform from 'components/Form';
 import InputSearch from 'components/InputSearch';
-import Contacts from 'components/Contacts';
+// import Contacts from 'components/Contacts';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
 
