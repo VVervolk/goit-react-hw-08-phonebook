@@ -1,12 +1,20 @@
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts } from 'redux/selectors';
+import { makeFilter } from 'redux/slices/filterSlice';
 
-export default function InputSearch({ options, filter, onChange }) {
+export default function InputSearch() {
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+
   return (
     <div>
-      {options.length > 0 ? (
+      {contacts.length > 0 ? (
         <>
           <p>Find contacts by name</p>
-          <input type="text" value={filter} onChange={onChange} />
+          <input
+            type="text"
+            onChange={e => dispatch(makeFilter(e.target.value))}
+          />
         </>
       ) : (
         <p>No contacts here</p>
@@ -14,8 +22,3 @@ export default function InputSearch({ options, filter, onChange }) {
     </div>
   );
 }
-
-InputSearch.propTypes = {
-  value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-};

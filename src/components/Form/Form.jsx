@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Button, FormAdd } from './Form.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/slices/contactsSlice';
+import { getContacts } from 'redux/selectors';
 
 const schema = Yup.object().shape({
   name: Yup.string()
@@ -23,7 +25,22 @@ const schema = Yup.object().shape({
     .required(),
 });
 
-export default function Contactsform({ onSubmit }) {
+export default function Contactsform() {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+
+  function handleSubmit(newContact, { resetForm }) {
+    if (checkAvailability(contacts, newContact)) {
+      alert(`${newContact.name} is already in contacts`);
+      return;
+    }
+
+    newContact.id = crypto.randomUUID().slice(0, 7);
+
+    dispatch(addContact(newContact));
+    resetForm();
+  }
+
   return (
     <Formik
       initialValues={{
@@ -31,7 +48,7 @@ export default function Contactsform({ onSubmit }) {
         number: '',
       }}
       validationSchema={schema}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
     >
       <FormAdd>
         <label htmlFor="name">Name</label>
@@ -46,6 +63,8 @@ export default function Contactsform({ onSubmit }) {
   );
 }
 
-Contactsform.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+function checkAvailability(contacts, contact) {
+  return contacts.some(
+    option => option.name.toLowerCase() === contact.name.toLowerCase()
+  );
+}

@@ -1,68 +1,42 @@
-import { useState, useEffect, useRef } from 'react';
+// import { useState, useEffect, useRef } from 'react';
 import { Section } from './App.styled';
 import Contactsform from 'components/Form';
 import InputSearch from 'components/InputSearch';
 import Contacts from 'components/Contacts';
+import { useSelector } from 'react-redux';
+import { getContacts } from 'redux/selectors';
 
 export default function App() {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
+  const contacts = useSelector(getContacts);
+  console.log(contacts);
 
-  let isFirstRender = useRef(true);
+  // const [contacts, setContacts] = useState([]);
 
-  useEffect(() => {
-    let contactsFromStorage = localStorage.getItem('contacts');
-    if (contactsFromStorage) {
-      contactsFromStorage = JSON.parse(contactsFromStorage);
-      setContacts(contactsFromStorage);
-    }
-  }, []);
+  // let isFirstRender = useRef(true);
 
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  // // useEffect(() => {
+  // //   let contactsFromStorage = localStorage.getItem('contacts');
+  // //   if (contactsFromStorage) {
+  // //     contactsFromStorage = JSON.parse(contactsFromStorage);
+  // //     setContacts(contactsFromStorage);
+  // //   }
+  // // }, []);
 
-  function handleSubmit(newContact, { resetForm }) {
-    if (checkAvailability(contacts, newContact)) {
-      alert(`${newContact.name} is already in contacts`);
-      return;
-    }
-
-    newContact.id = crypto.randomUUID().slice(0, 7);
-
-    setContacts([...contacts, newContact]);
-    resetForm();
-  }
-
-  function deleteContact(index) {
-    setContacts(contacts.filter(value => value.id !== index));
-  }
+  // // useEffect(() => {
+  // //   if (isFirstRender.current) {
+  // //     isFirstRender.current = false;
+  // //     return;
+  // //   }
+  // //   localStorage.setItem('contacts', JSON.stringify(contacts));
+  // // }, [contacts]);
 
   return (
     <Section>
       <h1>Phonebook</h1>
-      <Contactsform onSubmit={handleSubmit}></Contactsform>
+      <Contactsform></Contactsform>
       <h2>Contacts</h2>
-      <InputSearch
-        options={contacts}
-        value={filter}
-        onChange={e => setFilter(e.target.value)}
-      />
-      <Contacts
-        options={contacts}
-        filter={filter}
-        deleteContact={deleteContact}
-      ></Contacts>
+      <InputSearch />
+      {/* {contacts.length !== 0 && <Contacts></Contacts>} */}
     </Section>
-  );
-}
-
-function checkAvailability(contacts, contact) {
-  return contacts.some(
-    option => option.name.toLowerCase() === contact.name.toLowerCase()
   );
 }

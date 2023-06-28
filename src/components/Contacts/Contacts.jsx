@@ -1,18 +1,25 @@
-import PropTypes from 'prop-types';
 import Item from './Item';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts, getFilter } from 'redux/selectors';
+import { deleteContact } from 'redux/slices/contactsSlice';
 
-export default function Contacts({ filter, options, deleteContact }) {
+export default function Contacts() {
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+
+  const dispatch = useDispatch();
+
   return (
     <ul>
       {filter === ''
-        ? options.map(contact => (
+        ? contacts.map(contact => (
             <Item
               key={crypto.randomUUID().slice(0, 5)}
               contact={contact}
-              deleteContact={deleteContact}
+              deleteContact={() => dispatch(deleteContact(contact.id))}
             ></Item>
           ))
-        : options
+        : contacts
             .filter(value =>
               value.name.toLowerCase().includes(`${filter.toLowerCase()}`)
             )
@@ -20,15 +27,9 @@ export default function Contacts({ filter, options, deleteContact }) {
               <Item
                 key={crypto.randomUUID().slice(0, 5)}
                 contact={contact}
-                deleteContact={deleteContact}
+                deleteContact={() => dispatch(deleteContact(contact.id))}
               ></Item>
             ))}
     </ul>
   );
 }
-
-Contacts.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.object).isRequired,
-  filter: PropTypes.string,
-  deleteContact: PropTypes.func.isRequired,
-};
