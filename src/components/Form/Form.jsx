@@ -2,7 +2,7 @@ import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Button, FormAdd } from './Form.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/slices/contactsSlice';
+import { addContact } from 'redux/operations';
 import { getContacts } from 'redux/selectors';
 
 const schema = Yup.object().shape({
@@ -35,8 +35,6 @@ export default function Contactsform() {
       return;
     }
 
-    newContact.id = crypto.randomUUID().slice(0, 7);
-
     dispatch(addContact(newContact));
     resetForm();
   }
@@ -45,7 +43,7 @@ export default function Contactsform() {
     <Formik
       initialValues={{
         name: '',
-        number: '',
+        phone: '',
       }}
       validationSchema={schema}
       onSubmit={handleSubmit}
@@ -54,9 +52,9 @@ export default function Contactsform() {
         <label htmlFor="name">Name</label>
         <Field name="name" id="name"></Field>
         <ErrorMessage name="name" />
-        <label htmlFor="number">Number</label>
-        <Field type="tel" name="number" id="number"></Field>
-        <ErrorMessage name="number" />
+        <label htmlFor="phone">Number</label>
+        <Field type="tel" name="phone" id="phone"></Field>
+        <ErrorMessage name="phone" />
         <Button type="submit">Add contact</Button>
       </FormAdd>
     </Formik>
@@ -64,7 +62,7 @@ export default function Contactsform() {
 }
 
 function checkAvailability(contacts, contact) {
-  return contacts.some(
+  return contacts.items.some(
     option => option.name.toLowerCase() === contact.name.toLowerCase()
   );
 }

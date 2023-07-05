@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import Item from './Item';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts } from 'redux/operations';
 import { getContacts, getFilter } from 'redux/selectors';
 import { deleteContact } from 'redux/slices/contactsSlice';
 
@@ -9,27 +11,34 @@ export default function Contacts() {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+  console.log(contacts.items.length);
+
   return (
-    <ul>
-      {filter === ''
-        ? contacts.map(contact => (
-            <Item
-              key={crypto.randomUUID().slice(0, 5)}
-              contact={contact}
-              deleteContact={() => dispatch(deleteContact(contact.id))}
-            ></Item>
-          ))
-        : contacts
-            .filter(value =>
-              value.name.toLowerCase().includes(`${filter.toLowerCase()}`)
-            )
-            .map(contact => (
+    contacts.items.length !== 0 && (
+      <ul>
+        {filter === ''
+          ? contacts.items.map(contact => (
               <Item
                 key={crypto.randomUUID().slice(0, 5)}
                 contact={contact}
                 deleteContact={() => dispatch(deleteContact(contact.id))}
               ></Item>
-            ))}
-    </ul>
+            ))
+          : contacts.items
+              .filter(value =>
+                value.name.toLowerCase().includes(`${filter.toLowerCase()}`)
+              )
+              .map(contact => (
+                <Item
+                  key={crypto.randomUUID().slice(0, 5)}
+                  contact={contact}
+                  deleteContact={() => dispatch(deleteContact(contact.id))}
+                ></Item>
+              ))}
+      </ul>
+    )
   );
 }
