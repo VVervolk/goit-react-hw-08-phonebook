@@ -13,7 +13,7 @@ const schema = Yup.object().shape({
       excludeEmptyString: true,
     })
     .required(),
-  number: Yup.string()
+  phone: Yup.string()
     .matches(
       /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
       {
@@ -34,7 +34,6 @@ export default function Contactsform() {
       alert(`${newContact.name} is already in contacts`);
       return;
     }
-
     dispatch(addContact(newContact));
     resetForm();
   }
@@ -62,7 +61,7 @@ export default function Contactsform() {
 }
 
 function checkAvailability(contacts, contact) {
-  return contacts.items.some(
+  return contacts.some(
     option => option.name.toLowerCase() === contact.name.toLowerCase()
   );
 }

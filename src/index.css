@@ -18,3 +18,8 @@ ul {
   list-style: none;
   padding: 0;
 }
+
+.spinner {
+  position: absolute;
+  left: 20%;
+}
