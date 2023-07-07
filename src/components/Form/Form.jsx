@@ -1,9 +1,10 @@
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Button, FormAdd } from './Form.styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/operations';
-import { getContacts } from 'redux/selectors';
+import {
+  useAddContactMutation,
+  useGetContactsQuery,
+} from 'redux/auth/services';
 
 const schema = Yup.object().shape({
   name: Yup.string()
@@ -13,7 +14,7 @@ const schema = Yup.object().shape({
       excludeEmptyString: true,
     })
     .required(),
-  phone: Yup.string()
+  number: Yup.string()
     .matches(
       /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
       {
@@ -26,23 +27,29 @@ const schema = Yup.object().shape({
 });
 
 export default function Contactsform() {
-  const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+  const { data, refetch } = useGetContactsQuery();
+  const [addContact] = useAddContactMutation();
 
-  function handleSubmit(newContact, { resetForm }) {
-    if (checkAvailability(contacts, newContact)) {
+  async function handleSubmit(newContact, { resetForm }) {
+    const checkAvailability = data.some(
+      option => option.name.toLowerCase() === newContact.name.toLowerCase()
+    );
+    if (checkAvailability) {
       alert(`${newContact.name} is already in contacts`);
       return;
     }
-    dispatch(addContact(newContact));
-    resetForm();
+    try {
+      await addContact(newContact);
+      refetch();
+      resetForm();
+    } catch (error) {}
   }
 
   return (
     <Formik
       initialValues={{
         name: '',
-        phone: '',
+        number: '',
       }}
       validationSchema={schema}
       onSubmit={handleSubmit}
@@ -51,17 +58,11 @@ export default function Contactsform() {
         <label htmlFor="name">Name</label>
         <Field name="name" id="name"></Field>
         <ErrorMessage name="name" />
-        <label htmlFor="phone">Number</label>
-        <Field type="tel" name="phone" id="phone"></Field>
-        <ErrorMessage name="phone" />
+        <label htmlFor="number">Number</label>
+        <Field type="tel" name="number" id="number"></Field>
+        <ErrorMessage name="number" />
         <Button type="submit">Add contact</Button>
       </FormAdd>
     </Formik>
-  );
-}
-
-function checkAvailability(contacts, contact) {
-  return contacts.some(
-    option => option.name.toLowerCase() === contact.name.toLowerCase()
   );
 }

@@ -1,21 +1,3 @@
-// import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-// export const contactsApi = createApi({
-//   reducerPath: 'contactsApi',
-//   baseQuery: fetchBaseQuery({
-//     baseUrl: 'https://connections-api.herokuapp.com',
-//   }),
-//   endpoints: builder => ({
-//     getContacts: builder.query({
-//       query: name => `pokemon/${name}`,
-//     }),
-//   }),
-// });
-
-// // Export hooks for usage in function components, which are
-// // auto-generated based on the defined endpoints
-// export const { useGetPokemonByNameQuery } = pokemonApi;
-
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 

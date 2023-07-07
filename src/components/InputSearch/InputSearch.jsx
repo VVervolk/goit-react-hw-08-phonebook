@@ -1,14 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { useDispatch } from 'react-redux';
+import { useGetContactsQuery } from 'redux/auth/services';
 import { makeFilter } from 'redux/slices/filterSlice';
 
 export default function InputSearch() {
-  const contacts = useSelector(getContacts);
+  const { data } = useGetContactsQuery();
+  const shouldRender = data && data.length !== 0;
+
   const dispatch = useDispatch();
 
   return (
     <div>
-      {contacts.length > 0 ? (
+      {shouldRender ? (
         <>
           <p>Find contacts by name</p>
           <input
