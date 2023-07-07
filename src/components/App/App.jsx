@@ -10,33 +10,24 @@ import Contacts from 'pages/Contacts';
 export default function App() {
   return (
     <Routes>
-      <Route path="/goit-react-hw-08-phonebook/" element={<Layout />}>
+      <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route
-          path="/goit-react-hw-08-phonebook/contacts"
+          path="/contacts"
           element={
-            <PrivateRoute
-              redirectTo="/goit-react-hw-08-phonebook/login"
-              component={<Contacts />}
-            />
+            <PrivateRoute redirectTo="/login" component={<Contacts />} />
           }
         ></Route>
         <Route
-          path="/goit-react-hw-08-phonebook/register"
+          path="/register"
           element={
-            <PublicRoute
-              redirectTo="/goit-react-hw-08-phonebook/contacts"
-              component={<RegisterPage />}
-            />
+            <PublicRoute redirectTo="/contacts" component={<RegisterPage />} />
           }
         />
         <Route
-          path="/goit-react-hw-08-phonebook/login"
+          path="/login"
           element={
-            <PublicRoute
-              redirectTo="/goit-react-hw-08-phonebook/contacts"
-              component={<LoginPage />}
-            />
+            <PublicRoute redirectTo="/contacts" component={<LoginPage />} />
           }
         />
         {/* <Route path="*" element={<NotFound />}></Route> */}

@@ -18,11 +18,9 @@ export default function Layout() {
       <header>
         <div>
           <nav>
-            <NavLink to="/goit-react-hw-08-phonebook/">Home</NavLink>
-            <NavLink to="/goit-react-hw-08-phonebook/register">
-              Registration
-            </NavLink>
-            <NavLink to="/goit-react-hw-08-phonebook/login">Log in</NavLink>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/register">Registration</NavLink>
+            <NavLink to="/login">Log in</NavLink>
           </nav>
           <button onClick={handleClick} type="button">
             Logout
