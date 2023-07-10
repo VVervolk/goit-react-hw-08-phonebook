@@ -1,6 +1,18 @@
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-// Define a service using a base URL and expected endpoints
+const toastOptions = {
+  position: 'top-right',
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: 'light',
+};
+
 export const contactsApi = createApi({
   reducerPath: 'contactsApi',
   baseQuery: fetchBaseQuery({
@@ -21,18 +33,6 @@ export const contactsApi = createApi({
         method: 'POST',
         body: credentials,
       }),
-      async onQueryStarted(id, { dispatch, queryFulfilled }) {
-        // // `onStart` side-effect
-        // dispatch(messageCreated('Fetching post...'));
-        // try {
-        //   const { data } = await queryFulfilled;
-        //   // `onSuccess` side-effect
-        //   dispatch(messageCreated('Post received!'));
-        // } catch (err) {
-        //   // `onError` side-effect
-        //   dispatch(messageCreated('Error fetching post!'));
-        // }
-      },
     }),
     logIn: builder.mutation({
       query: credentials => ({
@@ -40,18 +40,35 @@ export const contactsApi = createApi({
         method: 'POST',
         body: credentials,
       }),
+      transformErrorResponse: () => {
+        toast.error('Oops, something went wrong!', toastOptions);
+      },
     }),
     logOut: builder.mutation({
       query: () => ({
         url: 'users/logout',
         method: 'POST',
       }),
+      transformErrorResponse: () => {
+        toast.error('Oops, something went wrong!', toastOptions);
+      },
+      // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+      //   dispatch(contactsApi.util.resetApiState());
+      //   try {
+      //     await queryFulfilled;
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // },
     }),
     getContacts: builder.query({
       query: () => ({
         url: 'contacts',
         method: 'GET',
       }),
+      transformErrorResponse: () => {
+        toast.error('Oops, something went wrong!', toastOptions);
+      },
     }),
     addContact: builder.mutation({
       query: credentials => ({
@@ -59,6 +76,9 @@ export const contactsApi = createApi({
         method: 'POST',
         body: credentials,
       }),
+      transformErrorResponse: () => {
+        toast.error('Oops, something went wrong!', toastOptions);
+      },
     }),
     deleteContact: builder.mutation({
       query: contactId => ({
@@ -72,12 +92,22 @@ export const contactsApi = createApi({
         method: 'PATCH',
         body: credentials,
       }),
+      transformErrorResponse: () => {
+        toast.error('Oops, something went wrong!', toastOptions);
+      },
+    }),
+    getCurrentUser: builder.query({
+      query: () => ({
+        url: 'users/current',
+        method: 'GET',
+      }),
+      transformErrorResponse: () => {
+        toast.error('Oops, something went wrong!', toastOptions);
+      },
     }),
   }),
 });
 
-// Export hooks for usage in function components, which are
-// auto-generated based on the defined endpoints
 export const {
   useSignUpMutation,
   useLogInMutation,
@@ -87,4 +117,4 @@ export const {
   useUpdateContactMutation,
 } = contactsApi;
 
-export const { useGetContactsQuery } = contactsApi;
+export const { useGetContactsQuery, useGetCurrentUserQuery } = contactsApi;

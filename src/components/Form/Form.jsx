@@ -5,6 +5,18 @@ import {
   useAddContactMutation,
   useGetContactsQuery,
 } from 'redux/auth/services';
+import { toast } from 'react-toastify';
+
+const toastOptions = {
+  position: 'top-right',
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: 'light',
+};
 
 const schema = Yup.object().shape({
   name: Yup.string()
@@ -35,14 +47,17 @@ export default function Contactsform() {
       option => option.name.toLowerCase() === newContact.name.toLowerCase()
     );
     if (checkAvailability) {
-      alert(`${newContact.name} is already in contacts`);
+      toast.warn(`${newContact.name} is already in contacts`, toastOptions);
       return;
     }
     try {
       await addContact(newContact);
       refetch();
       resetForm();
-    } catch (error) {}
+      toast.success('Successful adding contact!', toastOptions);
+    } catch (error) {
+      toast.error('Oops, something went wrong!', toastOptions);
+    }
   }
 
   return (

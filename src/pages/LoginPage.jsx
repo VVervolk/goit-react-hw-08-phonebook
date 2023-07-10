@@ -1,5 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { setCredentials } from 'redux/auth/authSlice';
 import { useLogInMutation } from 'redux/auth/services';
 import * as Yup from 'yup';
@@ -25,6 +26,16 @@ export default function LoginPage() {
 
       dispatch(setCredentials(user.data));
       resetForm();
+      toast.success('Successful login!', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     } catch (error) {}
   }
 

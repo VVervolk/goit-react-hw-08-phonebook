@@ -5,14 +5,31 @@ import {
   useDeleteContactMutation,
   useGetContactsQuery,
 } from 'redux/auth/services';
+import { toast } from 'react-toastify';
+
+const toastOptions = {
+  position: 'top-right',
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: 'light',
+};
 
 export default function Item({ contact }) {
   const { refetch } = useGetContactsQuery();
   const [deleteContact] = useDeleteContactMutation();
 
   async function handleClick() {
-    await deleteContact(contact.id);
-    refetch();
+    try {
+      await deleteContact(contact.id);
+      toast.success('Successful deleting contact!', toastOptions);
+      refetch();
+    } catch (error) {
+      toast.error('Oops, something went wrong!', toastOptions);
+    }
   }
 
   return (

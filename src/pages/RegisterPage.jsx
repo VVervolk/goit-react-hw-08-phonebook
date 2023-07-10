@@ -2,6 +2,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { setCredentials } from 'redux/auth/authSlice';
 import { useSignUpMutation } from 'redux/auth/services';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 
 const schema = Yup.object().shape({
   name: Yup.string()
@@ -24,13 +26,20 @@ const schema = Yup.object().shape({
 
 export default function RegisterPage() {
   const [signUp] = useSignUpMutation();
+  const dispatch = useDispatch();
 
   async function handleSubmit(credentials, { resetForm }) {
     try {
       const user = await signUp(credentials);
-      setCredentials(user.data);
+      if (user.error) {
+        throw new Error();
+      }
+      dispatch(setCredentials(user.data));
       resetForm();
-    } catch (error) {}
+      toast.success('Successful registration!');
+    } catch (error) {
+      toast.error('Oops, something went wrong!');
+    }
   }
 
   return (

@@ -1,31 +1,24 @@
+import UserMenu from 'components/UserMenu/UserMenu';
 import { Suspense } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink, Outlet } from 'react-router-dom';
-import { removeCredentials } from 'redux/auth/authSlice';
-import { useLogOutMutation } from 'redux/auth/services';
+import { selectIsLoggedIn } from 'redux/selectors';
 
 export default function Layout() {
-  const [logOut] = useLogOutMutation();
-  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  async function handleClick() {
-    await logOut();
-    dispatch(removeCredentials());
-    return;
-  }
   return (
     <>
       <header>
-        <div>
+        {isLoggedIn ? (
+          <UserMenu />
+        ) : (
           <nav>
             <NavLink to="/">Home</NavLink>
             <NavLink to="/register">Registration</NavLink>
             <NavLink to="/login">Log in</NavLink>
           </nav>
-          <button onClick={handleClick} type="button">
-            Logout
-          </button>
-        </div>
+        )}
       </header>
       <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
