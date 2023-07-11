@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
-import Home from 'pages/Home';
+import Home from 'pages/Home/Home';
 import RegisterPage from 'pages/RegisterPage';
-import { PublicRoute } from 'components/PublicRoute';
+import { PublicRoute } from 'components/others/PublicRoute';
 import LoginPage from 'pages/LoginPage';
-import { PrivateRoute } from 'components/PrivateRoute';
+import { PrivateRoute } from 'components/others/PrivateRoute';
 import Layout from 'components/Layout/Layout';
 import Contacts from 'pages/Contacts';
 import { useGetCurrentUserQuery } from 'redux/auth/services';

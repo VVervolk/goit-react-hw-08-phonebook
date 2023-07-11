@@ -1,25 +1,29 @@
 import UserMenu from 'components/UserMenu/UserMenu';
+import { Container } from 'components/others/Container.styled';
 import { Suspense } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { selectIsLoggedIn } from 'redux/selectors';
+import { LeftLink, Nav, MenuLink } from './Layout.styled';
 
 export default function Layout() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
     <>
-      <header>
-        {isLoggedIn ? (
-          <UserMenu />
-        ) : (
-          <nav>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/register">Registration</NavLink>
-            <NavLink to="/login">Log in</NavLink>
-          </nav>
-        )}
-      </header>
+      <Container>
+        <header>
+          {isLoggedIn ? (
+            <UserMenu />
+          ) : (
+            <Nav>
+              <LeftLink to="/">Home</LeftLink>
+              <MenuLink to="/register">Registration</MenuLink>
+              <MenuLink to="/login">Log in</MenuLink>
+            </Nav>
+          )}
+        </header>
+      </Container>
       <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
       </Suspense>

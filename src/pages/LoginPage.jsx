@@ -4,6 +4,16 @@ import { toast } from 'react-toastify';
 import { setCredentials } from 'redux/auth/authSlice';
 import { useLogInMutation } from 'redux/auth/services';
 import * as Yup from 'yup';
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  VStack,
+} from '@chakra-ui/react';
+import background from 'images/background.svg';
 
 const schema = Yup.object().shape({
   email: Yup.string().email('Must be a valid email').required(),
@@ -40,27 +50,73 @@ export default function LoginPage() {
   }
 
   return (
-    <Formik
-      initialValues={{
-        email: '',
-        password: '',
-      }}
-      validationSchema={schema}
-      onSubmit={handleSubmit}
+    <Flex
+      backgroundSize="cover"
+      minW="414px"
+      backgroundImage={background}
+      align="center"
+      justify="center"
+      h="100vh"
     >
-      <Form>
-        <label htmlFor="email">
-          Email
-          <Field type="email" name="email" id="email" />
-        </label>
-        <ErrorMessage name="email" />
-        <label htmlFor="password">
-          Password
-          <Field type="password" name="password" id="password" />
-        </label>
-        <ErrorMessage name="password" />
-        <button type="submit">Submit</button>
-      </Form>
-    </Formik>
+      <Box
+        minHeight="200px"
+        bg="white"
+        p={6}
+        rounded="md"
+        w="clamp(386px,40%,800px )"
+      >
+        <VStack spacing={4} align="flex-start">
+          <FormControl>
+            <Formik
+              initialValues={{
+                email: '',
+                password: '',
+              }}
+              validationSchema={schema}
+              onSubmit={handleSubmit}
+            >
+              <Form>
+                <FormLabel width="full" htmlFor="email">
+                  Email
+                  <Field
+                    as={Input}
+                    variant="filled"
+                    type="email"
+                    name="email"
+                    id="email"
+                  />
+                </FormLabel>
+                <ErrorMessage name="email" />
+                <FormLabel width="full" htmlFor="password">
+                  Password
+                  <Field
+                    as={Input}
+                    variant="filled"
+                    type="password"
+                    name="password"
+                    id="password"
+                  />
+                </FormLabel>
+                <ErrorMessage name="password" />
+                <Button
+                  _hover={{
+                    bgColor: '#edf2f7',
+                    color: 'blue.600',
+                    borderWidth: '2px',
+                    borderColor: 'blue.600',
+                  }}
+                  color="white"
+                  bgColor="blue.600"
+                  width="full"
+                  type="submit"
+                >
+                  Submit
+                </Button>
+              </Form>
+            </Formik>
+          </FormControl>
+        </VStack>
+      </Box>
+    </Flex>
   );
 }

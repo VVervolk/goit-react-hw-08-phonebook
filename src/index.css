@@ -19,6 +19,12 @@ ul {
   padding: 0;
 }
 
+a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
 .spinner {
   position: absolute;
   left: 20%;

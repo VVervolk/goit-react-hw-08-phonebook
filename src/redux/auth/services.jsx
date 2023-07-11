@@ -25,7 +25,7 @@ export const contactsApi = createApi({
       return headers;
     },
   }),
-
+  keepUnusedDataFor: 5,
   endpoints: builder => ({
     signUp: builder.mutation({
       query: credentials => ({

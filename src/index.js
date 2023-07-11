@@ -6,15 +6,21 @@ import { Provider } from 'react-redux';
 import { persistor, store } from './redux/store';
 import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { myTheme } from './theme';
+
+const theme = extendTheme(myTheme);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  // <React.StrictMode>
-  <BrowserRouter basename="/goit-react-hw-08-phonebook">
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
-  </BrowserRouter>
-  // </React.StrictMode>
+  <React.StrictMode>
+    <BrowserRouter basename="/goit-react-hw-08-phonebook">
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ChakraProvider theme={theme}>
+            <App />
+          </ChakraProvider>
+        </PersistGate>
+      </Provider>
+    </BrowserRouter>
+  </React.StrictMode>
 );

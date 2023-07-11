@@ -9,7 +9,9 @@
 9. Сделать Рефреш + обработать flash ✔
 10. Создать компонент UserMenu ✔
 11. Обработать ошибки b оповещания ✔
-12. Обработать loading
-13. Стилизация
+12. Стилизация
+13. Обработать loading and skeleton
+    https://www.npmjs.com/package/react-loading-skeleton
 14. Пофиксить path ✔
 15. Включить <React.StrictMode>
+16. Отключить валидацию для ментора

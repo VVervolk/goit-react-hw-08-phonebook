@@ -1,22 +1,24 @@
-import { Formik, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Button, FormAdd } from './Form.styled';
 import {
   useAddContactMutation,
   useGetContactsQuery,
 } from 'redux/auth/services';
 import { toast } from 'react-toastify';
-
-const toastOptions = {
-  position: 'top-right',
-  autoClose: 5000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: 'light',
-};
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { useRef } from 'react';
 
 const schema = Yup.object().shape({
   name: Yup.string()
@@ -41,43 +43,73 @@ const schema = Yup.object().shape({
 export default function Contactsform() {
   const { data, refetch } = useGetContactsQuery();
   const [addContact] = useAddContactMutation();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
 
   async function handleSubmit(newContact, { resetForm }) {
     const checkAvailability = data.some(
       option => option.name.toLowerCase() === newContact.name.toLowerCase()
     );
     if (checkAvailability) {
-      toast.warn(`${newContact.name} is already in contacts`, toastOptions);
+      toast.warn(`${newContact.name} is already in contacts`);
       return;
     }
     try {
       await addContact(newContact);
       refetch();
       resetForm();
-      toast.success('Successful adding contact!', toastOptions);
+      onClose();
+      toast.success('Successful adding contact!');
     } catch (error) {
-      toast.error('Oops, something went wrong!', toastOptions);
+      toast.error('Oops, something went wrong!');
     }
   }
 
   return (
-    <Formik
-      initialValues={{
-        name: '',
-        number: '',
-      }}
-      validationSchema={schema}
-      onSubmit={handleSubmit}
-    >
-      <FormAdd>
-        <label htmlFor="name">Name</label>
-        <Field name="name" id="name"></Field>
-        <ErrorMessage name="name" />
-        <label htmlFor="number">Number</label>
-        <Field type="tel" name="number" id="number"></Field>
-        <ErrorMessage name="number" />
-        <Button type="submit">Add contact</Button>
-      </FormAdd>
-    </Formik>
+    <>
+      <Button onClick={onOpen}>Add contact</Button>
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add new contact</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <Formik
+                initialValues={{
+                  name: '',
+                  number: '',
+                }}
+                validationSchema={schema}
+                onSubmit={handleSubmit}
+              >
+                <Form>
+                  <FormLabel htmlFor="name">Name</FormLabel>
+                  <Field as={Input} name="name" id="name"></Field>
+                  <ErrorMessage name="name" />
+                  <FormLabel htmlFor="number">Number</FormLabel>
+                  <Field
+                    as={Input}
+                    type="tel"
+                    name="number"
+                    id="number"
+                  ></Field>
+                  <ErrorMessage name="number" />
+                  <Button type="submit">Add contact</Button>
+                  <Button onClick={onClose}>Cancel</Button>
+                </Form>
+              </Formik>
+            </FormControl>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   );
 }

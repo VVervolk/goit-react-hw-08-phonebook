@@ -1,6 +1,9 @@
 import { useDispatch } from 'react-redux';
 import { useGetContactsQuery } from 'redux/auth/services';
 import { makeFilter } from 'redux/slices/filterSlice';
+import { Search2Icon } from '@chakra-ui/icons';
+import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 
 export default function InputSearch() {
   const { data } = useGetContactsQuery();
@@ -11,15 +14,25 @@ export default function InputSearch() {
   return (
     <div>
       {shouldRender ? (
-        <>
-          <p>Find contacts by name</p>
-          <input
-            type="text"
+        <InputGroup maxW={'80%'} mt={'30px'}>
+          <InputLeftElement pointerEvents="none">
+            <Search2Icon color="blue.600" />
+          </InputLeftElement>
+          <Input
             onChange={e => dispatch(makeFilter(e.target.value))}
+            type="text"
+            placeholder="Find contacts by name"
           />
-        </>
+        </InputGroup>
       ) : (
-        <p>No contacts here</p>
+        <Text
+          color={'blue.600'}
+          fontWeight={'500'}
+          fontSize={'clamp(1rem, 2.5vw, 1.5rem)'}
+          mt={'30px'}
+        >
+          You haven`t add any contact yet!
+        </Text>
       )}
     </div>
   );
