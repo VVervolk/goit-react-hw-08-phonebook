@@ -23,7 +23,6 @@ import {
 import { useRef } from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 import InputSearch from 'components/InputSearch/InputSearch';
-import { Container } from 'components/others/Container.styled';
 
 const schema = Yup.object().shape({
   name: Yup.string()
