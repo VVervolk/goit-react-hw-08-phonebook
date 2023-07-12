@@ -17,6 +17,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Text,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
@@ -73,16 +74,32 @@ export default function Contactsform() {
 
   return (
     <>
-      <Container>
-        <Flex w={'100%'} alignItems={'end'} justifyContent={'space-between'}>
-          <InputSearch />
+      <Flex
+        gap={'5%'}
+        mt={'30px'}
+        alignItems={'center'}
+        justifyContent={'space-between'}
+      >
+        <InputSearch />
 
-          <Button flexGrow={0} display={'inline-block'} onClick={onOpen}>
-            Add contact
-            <AddIcon ml={'8px'} />
-          </Button>
-        </Flex>
-      </Container>
+        <Button
+          bgColor={'blue.600'}
+          color={'white'}
+          display={'flex'}
+          alignItems={'center'}
+          p={'8px'}
+          w={'clamp(30px,15%,140px)'}
+          onClick={onOpen}
+          fontSize={'clamp(0.5rem, 1.5vw, 1.0rem)'}
+        >
+          <Text display={{ base: 'none', md: 'block' }}>Add contact</Text>
+          <AddIcon
+            w={{ base: '1.9em', md: '1em' }}
+            h={{ base: '1.9em', md: '1em' }}
+            ml={{ md: '8px' }}
+          />
+        </Button>
+      </Flex>
 
       <Modal
         initialFocusRef={initialRef}

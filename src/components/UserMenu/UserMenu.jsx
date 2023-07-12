@@ -36,15 +36,15 @@ export default function UserMenu() {
           <Button
             _hover={{
               bgColor: 'white',
-              color: 'blue.600',
-              borderColor: 'blue.600',
+              color: 'red.400',
+              borderColor: 'red.400',
             }}
             fontSize={'clamp(1rem, 2.5vw, 1.5rem)'}
-            h={'50px'}
+            h={'clamp(2rem, 4.2vw, 2.4rem)'}
             w={'clamp(4rem, 10vw, 7rem)'}
-            ml={'50px'}
+            ml={'clamp(1.2rem, 2.8vw, 1.8rem)'}
             color={'white'}
-            backgroundColor="blue.600"
+            backgroundColor="red.400"
             onClick={handleClick}
             type="button"
             borderWidth="2px"

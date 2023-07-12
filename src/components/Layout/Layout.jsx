@@ -11,8 +11,8 @@ export default function Layout() {
 
   return (
     <>
-      <Container>
-        <header>
+      <header>
+        <Container>
           {isLoggedIn ? (
             <UserMenu />
           ) : (
@@ -22,8 +22,8 @@ export default function Layout() {
               <MenuLink to="/login">Log in</MenuLink>
             </Nav>
           )}
-        </header>
-      </Container>
+        </Container>
+      </header>
       <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
       </Suspense>

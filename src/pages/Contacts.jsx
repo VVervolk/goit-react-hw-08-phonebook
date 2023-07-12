@@ -13,7 +13,7 @@ export default function Contacts() {
   return (
     <>
       <Container>
-        <Contactsform></Contactsform>
+        <Contactsform />
         {shouldRenderContacts && (
           <ul>
             {filter === ''
