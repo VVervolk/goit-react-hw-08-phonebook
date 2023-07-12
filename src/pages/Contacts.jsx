@@ -3,7 +3,6 @@ import { getFilter } from 'redux/selectors';
 import Item from 'components/Contacts/Item';
 import { useSelector } from 'react-redux';
 import Contactsform from 'components/Form/Form';
-import InputSearch from 'components/InputSearch/InputSearch';
 import { Container } from 'components/others/Container.styled';
 
 export default function Contacts() {
@@ -14,7 +13,6 @@ export default function Contacts() {
   return (
     <>
       <Container>
-        <InputSearch />
         <Contactsform></Contactsform>
         {shouldRenderContacts && (
           <ul>

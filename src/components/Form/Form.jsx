@@ -7,6 +7,7 @@ import {
 import { toast } from 'react-toastify';
 import {
   Button,
+  Flex,
   FormControl,
   FormLabel,
   Input,
@@ -19,6 +20,9 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
+import { AddIcon } from '@chakra-ui/icons';
+import InputSearch from 'components/InputSearch/InputSearch';
+import { Container } from 'components/others/Container.styled';
 
 const schema = Yup.object().shape({
   name: Yup.string()
@@ -69,7 +73,17 @@ export default function Contactsform() {
 
   return (
     <>
-      <Button onClick={onOpen}>Add contact</Button>
+      <Container>
+        <Flex w={'100%'} alignItems={'end'} justifyContent={'space-between'}>
+          <InputSearch />
+
+          <Button flexGrow={0} display={'inline-block'} onClick={onOpen}>
+            Add contact
+            <AddIcon ml={'8px'} />
+          </Button>
+        </Flex>
+      </Container>
+
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}

@@ -12,9 +12,9 @@ export default function InputSearch() {
   const dispatch = useDispatch();
 
   return (
-    <div>
+    <>
       {shouldRender ? (
-        <InputGroup maxW={'80%'} mt={'30px'}>
+        <InputGroup flexGrow={2} minW={'80%'} mt={'30px'}>
           <InputLeftElement pointerEvents="none">
             <Search2Icon color="blue.600" />
           </InputLeftElement>
@@ -34,6 +34,6 @@ export default function InputSearch() {
           You haven`t add any contact yet!
         </Text>
       )}
-    </div>
+    </>
   );
 }
