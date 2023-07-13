@@ -72,15 +72,15 @@ export default function Contactsform() {
             display={'flex'}
             alignItems={'center'}
             p={'8px'}
-            w={'clamp(30px,15%,140px)'}
+            w={'clamp(30px,18%,140px)'}
             onClick={onOpen}
             fontSize={'clamp(0.5rem, 1.5vw, 1.0rem)'}
           >
             <Text display={{ base: 'none', md: 'block' }}>Add contact</Text>
             <AddIcon
-              w={{ base: '1.9em', md: '1em' }}
-              h={{ base: '1.9em', md: '1em' }}
-              ml={{ md: '8px' }}
+              w={{ base: '1.9em' }}
+              h={{ base: '1.9em' }}
+              display={{ md: 'none' }}
             />
           </Button>
         </Flex>

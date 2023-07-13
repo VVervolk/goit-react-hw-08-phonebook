@@ -27,6 +27,7 @@ import {
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useRef } from 'react';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
 export default function Item({ contact }) {
   const { onOpen, isOpen, onClose } = useDisclosure();
@@ -73,21 +74,29 @@ export default function Item({ contact }) {
         <Text fontSize={'clamp(1rem, 3vw, 1.6rem)'}>
           {contact.name}: {contact.number}
         </Text>
-        <ButtonGroup ml={'auto'} gap={'5%'}>
+        <ButtonGroup justifyContent={'flex-end'} ml={'auto'} gap={'5%'}>
           <Button
             _hover={{
               bgColor: 'white',
               color: 'gray.800',
               borderColor: 'gray.400',
             }}
+            w={'clamp(30px,8vw,80px)'}
             color={'gray.800'}
             backgroundColor="gray.100"
             borderWidth="2px"
             borderColor="white"
             type="button"
             onClick={onOpen}
+            fontSize={'clamp(0.5rem, 1.5vw, 1.0rem)'}
           >
-            Edit
+            <Text display={{ base: 'none', md: 'block' }}>Edit</Text>
+
+            <EditIcon
+              w={{ base: '2.2em' }}
+              h={{ base: '2.2em' }}
+              display={{ md: 'none' }}
+            />
           </Button>
           <Button
             _hover={{
@@ -95,14 +104,22 @@ export default function Item({ contact }) {
               color: 'red.400',
               borderColor: 'red.400',
             }}
+            w={'clamp(30px,8vw,80px)'}
             color={'white'}
             backgroundColor="red.400"
             borderWidth="2px"
             borderColor="white"
             type="button"
             onClick={handleDelete}
+            fontSize={'clamp(0.5rem, 1.5vw, 1.0rem)'}
           >
-            Delete
+            <Text display={{ base: 'none', md: 'block' }}>Delete</Text>
+
+            <DeleteIcon
+              w={{ base: '2.2em' }}
+              h={{ base: '2.2em' }}
+              display={{ md: 'none' }}
+            />
           </Button>
         </ButtonGroup>
       </ListItem>
