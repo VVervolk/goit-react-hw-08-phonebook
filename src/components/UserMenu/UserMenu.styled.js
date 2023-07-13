@@ -8,5 +8,5 @@ export const Usermenu = styled.div`
 
 export const UserName = styled.p`
   font-weight: semibold;
-  font-size: clamp(1.2rem, 2.8vw, 1.8rem);
+  font-size: clamp(1.3rem, 2.8vw, 1.8rem);
 `;

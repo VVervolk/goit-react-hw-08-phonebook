@@ -52,14 +52,6 @@ export const contactsApi = createApi({
       transformErrorResponse: () => {
         toast.error('Oops, something went wrong!', toastOptions);
       },
-      // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-      //   dispatch(contactsApi.util.resetApiState());
-      //   try {
-      //     await queryFulfilled;
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      // },
     }),
     getContacts: builder.query({
       query: () => ({
@@ -87,14 +79,11 @@ export const contactsApi = createApi({
       }),
     }),
     updateContact: builder.mutation({
-      query: (contactId, credentials) => ({
-        url: `contacts/${contactId}`,
+      query: credentials => ({
+        url: `contacts/${credentials.id}`,
         method: 'PATCH',
-        body: credentials,
+        body: { name: credentials.name, number: credentials.number },
       }),
-      transformErrorResponse: () => {
-        toast.error('Oops, something went wrong!', toastOptions);
-      },
     }),
     getCurrentUser: builder.query({
       query: () => ({

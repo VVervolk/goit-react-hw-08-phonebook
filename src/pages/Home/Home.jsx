@@ -15,7 +15,14 @@ export default function Home() {
             Phonebook. Say goodbye to scattered contacts and hello to seamless
             organization.
           </Description>
-          <Button color="blue.600" as={NavLink} to="/register">
+          <Button
+            fontSize={'clamp(0.9rem, 2.5vw, 1.2rem)'}
+            h={'clamp(25px,40px,4.5vw)'}
+            w={'clamp(110px,25%,150px)'}
+            color="blue.600"
+            as={NavLink}
+            to="/register"
+          >
             Get started
             <ArrowForwardIcon marginLeft="8px" />
           </Button>

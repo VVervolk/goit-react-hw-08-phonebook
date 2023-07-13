@@ -14,7 +14,7 @@ export default function InputSearch() {
   return (
     <>
       {shouldRender ? (
-        <InputGroup w={'80%'}>
+        <InputGroup flexGrow={2} minW={'80%'}>
           <InputLeftElement pointerEvents="none">
             <Search2Icon color="blue.600" />
           </InputLeftElement>

@@ -4,7 +4,7 @@ import background from 'images/background.svg';
 export const Hero = styled.section`
   min-width: 414px;
   min-height: 200px;
-  height: 100vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,7 +24,7 @@ export const Title = styled.h1`
 
 export const Description = styled.p`
   font-weight: 400;
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-size: clamp(0.8rem, 2.5vw, 1.4rem);
   max-width: 800px;
   color: white;
   margin-bottom: 16px;

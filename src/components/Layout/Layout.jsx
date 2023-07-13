@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import { selectIsLoggedIn } from 'redux/selectors';
 import { LeftLink, Nav, MenuLink } from './Layout.styled';
+import { Spinner } from '@chakra-ui/react';
 
 export default function Layout() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -24,7 +25,17 @@ export default function Layout() {
           )}
         </Container>
       </header>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.600"
+            size="xl"
+          />
+        }
+      >
         <Outlet />
       </Suspense>
     </>

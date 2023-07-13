@@ -51,7 +51,7 @@ export default function RegisterPage() {
       backgroundImage={background}
       align="center"
       justify="center"
-      h="100vh"
+      h="90vh"
     >
       <Box
         minHeight="200px"

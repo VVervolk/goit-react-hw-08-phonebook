@@ -4,6 +4,7 @@ import Item from 'components/Contacts/Item';
 import { useSelector } from 'react-redux';
 import Contactsform from 'components/Form/Form';
 import { Container } from 'components/others/Container.styled';
+import { List } from '@chakra-ui/react';
 
 export default function Contacts() {
   const { data } = useGetContactsQuery();
@@ -15,7 +16,7 @@ export default function Contacts() {
       <Container>
         <Contactsform />
         {shouldRenderContacts && (
-          <ul>
+          <List>
             {filter === ''
               ? data.map(contact => (
                   <Item key={contact.id} contact={contact}></Item>
@@ -27,7 +28,7 @@ export default function Contacts() {
                   .map(contact => (
                     <Item key={contact.id} contact={contact}></Item>
                   ))}
-          </ul>
+          </List>
         )}
       </Container>
     </>

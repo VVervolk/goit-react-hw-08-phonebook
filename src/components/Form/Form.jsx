@@ -1,13 +1,8 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import {
-  useAddContactMutation,
-  useGetContactsQuery,
-} from 'redux/auth/services';
-import { toast } from 'react-toastify';
 import {
   Button,
   Flex,
+  Text,
+  useDisclosure,
   FormControl,
   FormLabel,
   Input,
@@ -15,39 +10,25 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
-  useDisclosure,
 } from '@chakra-ui/react';
-import { useRef } from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 import InputSearch from 'components/InputSearch/InputSearch';
-
-const schema = Yup.object().shape({
-  name: Yup.string()
-    .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/, {
-      message:
-        "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan",
-      excludeEmptyString: true,
-    })
-    .required(),
-  number: Yup.string()
-    .matches(
-      /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
-      {
-        message:
-          'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +',
-        excludeEmptyString: true,
-      }
-    )
-    .required(),
-});
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import {
+  useAddContactMutation,
+  useGetContactsQuery,
+} from 'redux/auth/services';
+import { toast } from 'react-toastify';
+import { useRef } from 'react';
 
 export default function Contactsform() {
-  const { data, refetch } = useGetContactsQuery();
+  const { onOpen, isOpen, onClose } = useDisclosure();
+  const { data, refetch, isLoading } = useGetContactsQuery();
   const [addContact] = useAddContactMutation();
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialRef = useRef(null);
   const finalRef = useRef(null);
@@ -73,40 +54,47 @@ export default function Contactsform() {
 
   return (
     <>
-      <Flex
-        gap={'5%'}
-        mt={'30px'}
-        alignItems={'center'}
-        justifyContent={'space-between'}
-      >
-        <InputSearch />
-
-        <Button
-          bgColor={'blue.600'}
-          color={'white'}
-          display={'flex'}
+      {isLoading ? (
+        <div></div>
+      ) : (
+        <Flex
+          mb={'20px'}
+          gap={'5%'}
+          mt={'30px'}
           alignItems={'center'}
-          p={'8px'}
-          w={'clamp(30px,15%,140px)'}
-          onClick={onOpen}
-          fontSize={'clamp(0.5rem, 1.5vw, 1.0rem)'}
+          justifyContent={'space-between'}
         >
-          <Text display={{ base: 'none', md: 'block' }}>Add contact</Text>
-          <AddIcon
-            w={{ base: '1.9em', md: '1em' }}
-            h={{ base: '1.9em', md: '1em' }}
-            ml={{ md: '8px' }}
-          />
-        </Button>
-      </Flex>
+          <InputSearch />
+
+          <Button
+            bgColor={'blue.600'}
+            color={'white'}
+            display={'flex'}
+            alignItems={'center'}
+            p={'8px'}
+            w={'clamp(30px,15%,140px)'}
+            onClick={onOpen}
+            fontSize={'clamp(0.5rem, 1.5vw, 1.0rem)'}
+          >
+            <Text display={{ base: 'none', md: 'block' }}>Add contact</Text>
+            <AddIcon
+              w={{ base: '1.9em', md: '1em' }}
+              h={{ base: '1.9em', md: '1em' }}
+              ml={{ md: '8px' }}
+            />
+          </Button>
+        </Flex>
+      )}
 
       <Modal
+        size={{ base: 'xs', sm: 'sm', md: 'md', lg: 'lg' }}
+        isCentered
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
         isOpen={isOpen}
         onClose={onClose}
       >
-        <ModalOverlay />
+        <ModalOverlay h={'100%'} minW={'414px'} />
         <ModalContent>
           <ModalHeader>Add new contact</ModalHeader>
           <ModalCloseButton />
@@ -132,8 +120,10 @@ export default function Contactsform() {
                     id="number"
                   ></Field>
                   <ErrorMessage name="number" />
-                  <Button type="submit">Add contact</Button>
-                  <Button onClick={onClose}>Cancel</Button>
+                  <ModalFooter pb={'0'} gap={'5%'} pr={'0'}>
+                    <Button type="submit">Add contact</Button>
+                    <Button onClick={onClose}>Cancel</Button>
+                  </ModalFooter>
                 </Form>
               </Formik>
             </FormControl>
@@ -143,3 +133,20 @@ export default function Contactsform() {
     </>
   );
 }
+
+const schema = Yup.object().shape({
+  name: Yup.string()
+    .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/, {
+      message:
+        "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan",
+      excludeEmptyString: true,
+    })
+    .required(),
+  number: Yup.string()
+    .matches(/^[\d\s()+-]+$/, {
+      message:
+        'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +',
+      excludeEmptyString: true,
+    })
+    .required(),
+});

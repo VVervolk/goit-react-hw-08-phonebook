@@ -1,19 +1,5 @@
-1. Оформить маршруты ✔
-2. Подключить формик и яп ✔
-3. Создать страницу регистрации/логина ✔
-4. Создать форму для рег/лог ✔
-5. Подключить рег/лог с бєком (rtk) ✔
-6. Подключить логику приватной/публичной страницы ✔
-7. Подключить операции гет, добавления, удаления с бєка ✔
-8. Подключить persist ✔
-9. Сделать Рефреш + обработать flash ✔
-10. Создать компонент UserMenu ✔
-11. Обработать ошибки b оповещания ✔
-12. Стилизация
-13. Обработать loading and skeleton
-14. Пофиксить path ✔
-15. Включить <React.StrictMode>
-16. Отключить валидацию для ментора
-
-99.При длительном отсутствии в сети сохраненный токен в локале становится
-невалидный и при попытке получить данные пользователя происходит ошибка
+Introducing Phonebook - the ultimate solution for effortless contact
+organization. With Phonebook, you can conveniently manage all your personal and
+professional contacts in one centralized place. Wave goodbye to the hassle of
+scattered contacts and welcome seamless organization into your life. Stay
+connected and stay organized with Phonebook.

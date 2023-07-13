@@ -28,7 +28,8 @@ export default function UserMenu() {
         <Usermenu>
           <Avatar
             mr={'8px'}
-            size={{ base: 'sm', md: 'md' }}
+            h={'clamp(32px, 4vw, 2.8rem)'}
+            w={'clamp(32px, 4vw, 2.8rem)'}
             name={user}
             src="https://bit.ly/broken-link"
           />
@@ -40,7 +41,8 @@ export default function UserMenu() {
               borderColor: 'red.400',
             }}
             fontSize={'clamp(1rem, 2.5vw, 1.5rem)'}
-            h={'clamp(2rem, 4.2vw, 2.4rem)'}
+            pb={'2px'}
+            h={'clamp(32px, 4vw, 42px)'}
             w={'clamp(4rem, 10vw, 7rem)'}
             ml={'clamp(1.2rem, 2.8vw, 1.8rem)'}
             color={'white'}
